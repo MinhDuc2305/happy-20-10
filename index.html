@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💌 Chúc mừng ngày 20/10 💌</title>
+<style>
+  * {margin:0; padding:0; box-sizing:border-box;}
+  body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: radial-gradient(circle at center, #ffe6eb 0%, #fff5f7 100%);
+    overflow: hidden;
+    font-family: "Poppins", sans-serif;
+    position: relative;
+  }
+
+  /* 🌹 Hoa hồng SVG */
+  svg {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    stroke: #e91e63;
+    stroke-width: 2;
+    fill: none;
+    stroke-dasharray: 3000;
+    stroke-dashoffset: 3000;
+    animation: drawRose 4s ease forwards, bloom 1s ease 4s forwards;
+    filter: drop-shadow(0 0 15px rgba(233, 30, 99, 0.4));
+    z-index: 1;
+  }
+  @keyframes drawRose { to { stroke-dashoffset: 0; } }
+  @keyframes bloom {
+    from { transform: translate(-50%, -50%) scale(1); }
+    to { transform: translate(-50%, -50%) scale(1.1); fill: #f8bbd0; stroke: #ec407a; }
+  }
+
+  /* 🌸 Cánh hoa rơi */
+  .petal {
+    position: fixed;
+    top: -10px;
+    font-size: 18px;
+    color: #f8bbd0;
+    opacity: 0.9;
+    animation: fall 7s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* 🌸 Dòng chữ chúc mừng */
+  .title {
+    position: absolute;
+    top: 15%;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #d81b60;
+    opacity: 0;
+    animation: fadeInText 2s ease 4.5s forwards, enhanceTitle 3s ease-in-out 6.5s infinite;
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+  }
+  @keyframes enhanceTitle {
+    0% { color: #d81b60; transform: scale(1) translateX(0); }
+    16.67% { color: #ff5722; }
+    33.33% { color: #ffeb3b; }
+    50% { color: #4caf50; transform: scale(1.05) translateX(-5px); }
+    66.67% { color: #2196f3; }
+    83.33% { color: #9c27b0; transform: scale(1) translateX(5px); }
+    100% { color: #d81b60; transform: scale(1) translateX(0); }
+  }
+  @keyframes fadeInText {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 💌 Nút mở thư */
+  .open-btn {
+    font-size: 1.3rem;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 50px;
+    background-color: #f48fb1;
+    color: white;
+    box-shadow: 0 0 20px rgba(244, 143, 177, 0.4);
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards;
+    animation-delay: 6s;
+    z-index: 2;
+  }
+  @keyframes fadeIn { to { opacity: 1; transform: scale(1); } }
+  .open-btn:hover { background-color: #f06292; transform: scale(1.05); }
+
+  /* 🌫 Modal backdrop */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  /* 💌 Phong thư */
+  .envelope {
+    position: relative;
+    width: 450px;
+    height: auto;
+    min-height: 350px;
+    background: #ffe6eb;
+    border: 2px solid #f48fb1;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(244, 143, 177, 0.4);
+    overflow: visible;
+    transform-style: preserve-3d;
+    animation: popupIn 0.6s ease;
+  }
+  @keyframes popupIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  /* Nắp thư */
+  .flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: #f8bbd0;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top;
+    animation: openFlap 1s ease forwards;
+    animation-delay: 0.5s;
+  }
+  @keyframes openFlap {
+    from { transform: rotateX(0deg); }
+    to { transform: rotateX(180deg); }
+  }
+
+  /* Giấy thư */
+  .letter-paper {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    background: #fffafc;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    text-align: left;
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-y: auto;
+  }
+
+  /* Nút đóng */
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 1.5rem;
+    color: #d81b60;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  /* ✨ Sticker */
+  .sticker {
+    position: absolute;
+    font-size: 30px;
+    opacity: 0;
+    animation: floatUp 2.5s ease forwards;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(30px) scale(0.5); opacity: 0; }
+    40% { opacity: 1; transform: translateY(-10px) scale(1.2); }
+    100% { transform: translateY(-60px) scale(0.8); opacity: 0; }
+  }
+
+  /* 📸 Ảnh lác đác xung quanh */
+  .floating-img {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    animation: floatImg 8s ease-in-out infinite;
+    opacity: 0.9;
+    z-index: 0;
+  }
+  @keyframes floatImg {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+  }
+  .img1 { top: 20%; left: 8%; animation-delay: 0s; }
+  .img2 { top: 18%; right: 10%; animation-delay: 1s; }
+  .img3 { bottom: 15%; left: 12%; animation-delay: 2s; }
+  .img4 { bottom: 10%; right: 8%; animation-delay: 3s; }
+  .img5 { top: 45%; left: 50%; transform: translateX(-50%); animation-delay: 4s; }
+
+  @media (max-width: 480px) {
+    svg { width: 180px; height: 180px; top: 35%; }
+    .title { font-size: 1.4rem; top: 12%; }
+    .open-btn { font-size: 1.1rem; padding: 12px 24px; }
+    .envelope { width: 300px; height: 200px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- 🌹 Hoa hồng -->
+  <svg viewBox="0 0 200 200">
+    <path d="M100,180 C100,150 110,140 105,120 C100,100 70,100 80,80 
+             C90,60 120,70 120,50 C120,40 110,30 100,35 C90,40 85,55 95,60 
+             C100,63 105,60 110,55 C120,45 135,55 130,70 C125,90 100,90 100,110 
+             C100,125 110,135 105,150 C102,160 100,170 100,180 Z" />
+    <circle cx="100" cy="180" r="2" fill="#43a047"/>
+  </svg>
+
+  <!-- 🌸 Dòng chữ -->
+  <div class="title">💖 CHÚC MỪNG NGÀY 20/10 💖</div>
+
+  <!-- 💌 Button -->
+  <button class="open-btn">ẤN VÀO ĐÂY NÈEEE :'D</button>
+
+  <!-- 📸 Ảnh quanh thư -->
+  <img src="z7134269162992_146add101914accead6dfa35708291b5.jpg" class="floating-img img1">
+  <img src="z7134269174883_211a779fde1547f45c644fe301fabc07.jpg" class="floating-img img2">
+  <img src="z7134277967238_9103c06fab9600cdd8f77e03a40a26f3.jpg" class="floating-img img3">
+  <img src="z7134270241625_ef87dcd71e3163cf3ae75c40821aa82e.jpg" class="floating-img img4">
+  
+
+  <!-- Popup -->
+  <div class="modal-backdrop" id="modal" aria-hidden="true">
+    <div class="envelope" id="envelope">
+      <button class="" id="close">&times;</button>
+      <div class="flap"></div>
+      <div class="letter-paper" id="letter"></div>
+    </div>
+  </div>
+
+  <script>
+    const openBtn = document.querySelector('.open-btn');
+    const modal = document.getElementById('modal');
+    const closeBtn = document.getElementById('close');
+    const letterEl = document.getElementById('letter');
+    const envelope = document.getElementById('envelope');
+    let typingInterval;
+
+    const letterText = `
+      <p><i>Gửi đến Hải Yếnnnn,</i></p>
+      <p>Tớ chúc cậu 20/10 luôn vui vẻ, hạnh phúc, ngày càng xinhh đẹpp, luôn gặp nhiều may mắn. Và hơn hết, cậu nhớ phải chịu khó ăn uống vào nhéa, đừng thức khuya cũng đừng tắm muộn nữaaa</p>
+      <p>Tớ xin gửi đến cậu tất cả những điều tốt đẹp nhất, cùng những lời chúc chân thành nhất. Đừng quên rằng, tớ sẽ luôn ủng hộ và yêu thương cậu bằng tất cả những gì tớ có 💌</p>
+      <p><strong>Thân mến,<br>Ming Duck </strong></p>
+    `;
+
+    function startTyping(text, el) {
+      let i = 0;
+      el.innerHTML = '';
+      typingInterval = setInterval(() => {
+        el.innerHTML = text.slice(0, i);
+        i++;
+        if (i > text.length) clearInterval(typingInterval);
+      }, 30);
+    }
+
+    function openModal() {
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      letterEl.innerHTML = '';
+      setTimeout(() => startTyping(letterText, letterEl), 1400);
+      setInterval(createSticker, 800);
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      clearInterval(typingInterval);
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+    /* 🌸 Cánh hoa rơi */
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.innerHTML = '🌸';
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.fontSize = (Math.random() * 10 + 14) + 'px';
+      petal.style.animationDuration = (Math.random() * 3 + 5) + 's';
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 8000);
+    }
+    setTimeout(() => setInterval(createPetal, 500), 4000);
+
+    /* ✨ Sticker vui nhộn */
+    const stickers = ['🌸','💖','🐻','✨','💕','🌷','🩷','💝'];
+    function createSticker() {
+      const s = document.createElement('div');
+      s.classList.add('sticker');
+      s.textContent = stickers[Math.floor(Math.random() * stickers.length)];
+      s.style.left = (Math.random() * 80 + 10) + '%';
+      s.style.bottom = '10px';
+      s.style.animationDelay = Math.random() + 's';
+      envelope.appendChild(s);
+      setTimeout(() => s.remove(), 2500);
+    }
+  </script>
+</body>
+</html>

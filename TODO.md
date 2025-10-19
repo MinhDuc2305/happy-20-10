@@ -1,0 +1,2 @@
+- [x] Add media query for max-width: 600px to further reduce font sizes, heart size, padding, and button sizes for better mobile responsiveness.
+- [ ] Verify the changes by opening the file in a browser and testing on different screen sizes.
